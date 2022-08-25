@@ -1,8 +1,22 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import axios from "axios";
+import Head from "next/head";
+import Image from "next/image";
+import { useState } from "react";
+import styles from "../styles/Home.module.css";
 
 export default function Home() {
+  const [cards, setCards] = useState([]);
+  const fetchCards = () => {
+    axios("/api/cards").then(
+      (result) => {
+        if (Array.isArray(result.data?.items)) {
+          setCards(result.data.items);
+        }
+      },
+      (reason) => console.error(reason)
+    );
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -11,13 +25,23 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <button onClick={fetchCards}>get cards</button>
+      {cards &&
+        cards.map((card) => (
+          <div key={card.id}>
+            <span>{card.name}</span>
+            <p />
+            <img width={100} src={card.iconUrls.medium} alt="" />
+          </div>
+        ))}
+
       <main className={styles.main}>
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
+          Get started by editing{" "}
           <code className={styles.code}>pages/index.js</code>
         </p>
 
@@ -58,12 +82,12 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
+          Powered by{" "}
           <span className={styles.logo}>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
         </a>
       </footer>
     </div>
-  )
+  );
 }

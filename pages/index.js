@@ -1,21 +1,10 @@
-import axios from "axios";
 import Head from "next/head";
 import Image from "next/image";
-import { useState } from "react";
+import useCards from "../src/model/useCards";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
-  const [cards, setCards] = useState([]);
-  const fetchCards = () => {
-    axios("/api/cards").then(
-      (result) => {
-        if (Array.isArray(result.data?.items)) {
-          setCards(result.data.items);
-        }
-      },
-      (reason) => console.error(reason)
-    );
-  };
+  const { cards, fetchCards } = useCards();
 
   return (
     <div className={styles.container}>
@@ -26,16 +15,54 @@ export default function Home() {
       </Head>
 
       <button onClick={fetchCards}>get cards</button>
-      {cards &&
-        cards.map((card) => (
-          <div key={card.id}>
-            <span>{card.name}</span>
-            <p />
-            <img width={100} src={card.iconUrls.medium} alt="" />
-          </div>
-        ))}
+      {cards && (
+        <div
+          style={{
+            display: "flex",
+            maxWidth: 800,
+            margin: "auto",
+            flexWrap: "wrap",
+          }}
+        >
+          {cards.map((card) => (
+            <div
+              key={card.id}
+              style={{
+                margin: 8,
+                padding: 4,
+                width: 108,
+                height: 185,
+                border: "1px solid grey",
+                borderRadius: 8,
+                textAlign: "center",
+              }}
+            >
+              <Image
+                width={100}
+                height={130}
+                // style={{ objectFit: "cover" }}
+                objectFit={"cover"}
+                layout={"fixed"}
+                src={card.iconUrls.medium}
+                priority={true}
+                alt={card.name + "\n not available"}
+              />
+              <br />
+              <div
+                style={{
+                  width: "100%",
+                  wordBreak: "break-word",
+                  whiteSpace: "break-spaces",
+                }}
+              >
+                {card.name}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
-      <main className={styles.main}>
+      {/* <main className={styles.main}>
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
@@ -87,7 +114,7 @@ export default function Home() {
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
         </a>
-      </footer>
+      </footer> */}
     </div>
   );
 }

@@ -1,7 +1,12 @@
-import '../styles/globals.css'
+import { CssVarsProvider } from "@mui/joy";
+import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return (
+    <CssVarsProvider>
+      <Component {...pageProps} />
+    </CssVarsProvider>
+  );
 }
 
-export default MyApp
+export default MyApp;

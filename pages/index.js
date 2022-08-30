@@ -1,3 +1,4 @@
+import { Button, Card, CardContent, CardCover, Typography } from "@mui/joy";
 import Head from "next/head";
 import Image from "next/image";
 import useCards from "../src/model/useCards";
@@ -14,7 +15,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <button onClick={fetchCards}>get cards</button>
+      <Button onClick={fetchCards}>get cards</Button>
       {cards && (
         <div
           style={{
@@ -25,7 +26,7 @@ export default function Home() {
           }}
         >
           {cards.map((card) => (
-            <div
+            <Card
               key={card.id}
               style={{
                 margin: 8,
@@ -37,27 +38,30 @@ export default function Home() {
                 textAlign: "center",
               }}
             >
-              <Image
-                width={100}
-                height={130}
-                // style={{ objectFit: "cover" }}
-                objectFit={"cover"}
-                layout={"fixed"}
-                src={card.iconUrls.medium}
-                priority={true}
-                alt={card.name + "\n not available"}
-              />
+              <CardCover>
+                <Image
+                  width={100}
+                  height={130}
+                  // style={{ objectFit: "cover" }}
+                  objectFit={"cover"}
+                  layout={"fixed"}
+                  src={card.iconUrls.medium}
+                  priority={true}
+                  alt={card.name + "\n not available"}
+                />
+              </CardCover>
               <br />
-              <div
-                style={{
-                  width: "100%",
-                  wordBreak: "break-word",
-                  whiteSpace: "break-spaces",
+              <CardContent
+                sx={{
+                  bottom: 4,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "flex-end",
                 }}
               >
-                {card.name}
-              </div>
-            </div>
+                <Typography textAlign={"center"}>{card.name}</Typography>
+              </CardContent>
+            </Card>
           ))}
         </div>
       )}

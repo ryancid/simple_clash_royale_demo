@@ -1,5 +1,12 @@
-## testing for clash royale API 
+## main goal
 
+- This project is for fun and testing my skill for how to assemble REST API with limited ip and hiding API token from client side.
+- For informatic website, just go https://royaleapi.com
+- Current issues 
+    - /api/card respond only card names and card images, and images not with consistent size.
+    - clashroyale API https://api.clashroyale.com/v1 need fixed ip to call (That would not happen if called on client side) and API key (should not exposed on client side)
+    
+## testing for clash royale API 
 
 - Register and generate a key for local https://developer.clashroyale.com/
 - add env variable .env.local API_KEY=[API_TOKEN]
@@ -18,7 +25,12 @@ and not deleted yet
 First, run the development server:
 
 ```bash
-npm run dev
-# or
+yarn [install]
 yarn dev
+```
+
+For running on production env
+```
+yarn build
+yarn start
 ```

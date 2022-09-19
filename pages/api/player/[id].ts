@@ -1,15 +1,22 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { serverInstance } from "src/server/server.config";
+import { AxiosError, AxiosResponse } from 'axios'
+import { NextApiRequest, NextApiResponse } from 'next'
+import { serverInstance } from 'src/server/server.config'
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { id } = req.query;
-  //id : string | string[], may needed to check string[] case instead of just toString
+  const { id: ids } = req.query
+  let id: string
+  if (typeof ids === 'object' && Array.isArray(ids)) {
+    id = ids[0]
+    //take first id to query
+  } else {
+    id = ids
+  }
   serverInstance
-    .get("/players/" + encodeURIComponent(id.toString()))
-    .then((axiosResult) =>
+    .get('/players/' + encodeURIComponent(id))
+    .then((axiosResult: AxiosResponse) =>
       res.status(axiosResult.status).json(axiosResult.data)
     )
-    .catch((reason) => {
-      res.status(404).json(reason);
-    });
+    .catch((error: AxiosError) => {
+      res.status(404).json(error)
+    })
 }

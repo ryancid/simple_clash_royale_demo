@@ -2,6 +2,7 @@ import axios from "axios";
 import { Button, TextField } from "@mui/joy";
 import { useCallback, useEffect, useState } from "react";
 
+// show player info view
 const Player = ({ player = {} }) => {
   return (
     <div>

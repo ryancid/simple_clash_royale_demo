@@ -7,6 +7,7 @@
     - clashroyale API https://api.clashroyale.com/v1 need ~~ fixed ip to call (That would not happen if called on client side) and ~~(resolved by using royale api proxy endpoint https://docs.royaleapi.com/#/proxy ) API key (should not exposed on client side)
     
 ## testing for clash royale API 
+### Demo Website: https://simple-clash-royale-demo.vercel.app/
 
 - Register and generate a key for local https://developer.clashroyale.com/. 
  IP set to 45.79.218.79 as current one is proxy through https://proxy.royaleapi.dev

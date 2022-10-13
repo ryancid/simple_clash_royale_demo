@@ -1,14 +1,16 @@
+import { useTheme } from "@emotion/react"
 import {Box, Card, CardCover, CardContent, Typography } from "@mui/joy"
 import Image from "next/image"
 
 const CardComp = ({card})=>{
+  const theme = useTheme()
     return (<Card
         // key={card.id}
         sx={{
           margin: 1,
           padding: 0.5,
-          width: 106,
-          height: 130,
+          width: {xs: 75, sm: 106},
+          height: {xs: 100, sm: 130},
           border: '1px solid grey',
           borderRadius: 8,
           textAlign: 'center',
@@ -22,11 +24,11 @@ const CardComp = ({card})=>{
       >
         <CardCover>
           <Image
-            width={100}
-            height={130}
+            // width={100}
+            // height={130}
             // style={{ objectFit: "cover" }}
             objectFit={'cover'}
-            layout={'fixed'}
+            layout={'fill'}
             src={card.iconUrls.medium}
             priority={true}
             alt={card.name + '\n not available'}

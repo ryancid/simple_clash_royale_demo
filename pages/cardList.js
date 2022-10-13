@@ -1,32 +1,30 @@
 import { serverInstance } from 'src/server/server.config'
 import CardComp from 'src/component/cardComp'
-import { Box, Button, Container } from '@mui/joy'
+import { Box, Button, Container, useTheme } from '@mui/joy'
 import { useCallback, useState } from 'react'
 
 const CardList = ({ cards }) => {
-  // console.log(cards)
   const size = 24
   const [page, setPage] = useState(0)
 
   const canNextPage = useCallback(() => {
     return (page + 1) * size < cards.length
-    //   setPage((p) => p + 1)
-    // }
-  }, [page, cards])
+  }, [page, size, cards.length])
   const canPrevPage = useCallback(() => {
     return page - 1 >= 0
-    //   setPage((p) => p - 1)
-    // }
   }, [page])
 
   return (
     <Box>
       <Container
         sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
+          display: 'grid',
+          gridTemplateColumns: {
+            xs: 'repeat(auto-fill, 80px)',
+            sm: 'repeat(auto-fill, 120px)',
+          },
           alignItems: 'center',
-          justifyContent: 'left',
+          justifyContent: 'space-around',
         }}
       >
         {cards.slice(page * size, page * size + size).map((card) => (

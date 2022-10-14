@@ -1,43 +1,39 @@
-import axios from "axios";
-import { Button, TextField } from "@mui/joy";
-import { useCallback, useEffect, useState } from "react";
+import axios from 'axios'
+import { Button, TextField, Typography } from '@mui/joy'
+import { useCallback, useEffect, useState } from 'react'
+import DeckComp from 'src/component/deckComp'
 
 // show player info view
 const Player = ({ player = {} }) => {
   return (
     <div>
-      <div>
-        name:{player.name}&nbsp;{player.tag}
-      </div>
+      <Typography variant="h2" component="h2">
+        {player.name}&nbsp;{player.tag}
+      </Typography>
       <div>
         wins:{player.wins}&nbsp;losses:{player.losses}
       </div>
+      {player.currentDeck && <DeckComp deck={player.currentDeck} />}
     </div>
-  );
-};
+  )
+}
 
 const Players = () => {
-  const [playerId, setPlayerId] = useState("");
-  const [fetch, setFetch] = useState(false);
+  const [playerId, setPlayerId] = useState('')
+  const [fetch, setFetch] = useState(false)
 
-  const [player, setPlayer] = useState();
+  const [player, setPlayer] = useState()
   const fetchPlayer = useCallback(() => {
-    axios("/api/player/" + encodeURIComponent(playerId))
+    setFetch(true)
+    axios('/api/player/' + encodeURIComponent(playerId))
       .then(
         (result) => {
-          setPlayer(result.data);
+          setPlayer(result.data)
         },
         (reason) => console.error(reason)
       )
-      .finally(() => setFetch(false));
-  }, [playerId]);
-
-  useEffect(() => {
-    if (fetch) {
-      fetchPlayer();
-    }
-    return () => {};
-  }, [fetch, fetchPlayer]);
+      .finally(() => setFetch(false))
+  }, [playerId])
 
   return (
     <div>
@@ -45,21 +41,21 @@ const Players = () => {
         placeholder="type game tag like #R09228V"
         onFocus={(e) => {
           if (!playerId) {
-            const defaultId = "#R09228V";
-            e.target.value = defaultId;
-            setPlayerId(defaultId);
+            const defaultId = '#R09228V'
+            e.target.value = defaultId
+            setPlayerId(defaultId)
           }
         }}
         onChange={(e) => setPlayerId(e.target.value)}
         endDecorator={
-          <Button disabled={fetch} onClick={() => setFetch(true)}>
+          <Button disabled={fetch} onClick={fetchPlayer}>
             Search
           </Button>
         }
       />
       {player && <Player player={player} />}
     </div>
-  );
-};
+  )
+}
 
-export default Players;
+export default Players

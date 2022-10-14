@@ -1,13 +1,11 @@
-import { Button, Card, CardContent, CardCover, Container, Typography } from '@mui/joy'
+import { Container, Typography } from '@mui/joy'
 import Head from 'next/head'
-import Image from 'next/image'
-import BasicLayout from '../src/layout/layout'
-import useCards from '../src/model/useCards'
-import CardComp from '../src/component/cardComp'
+// import useCards from '../src/model/useCards'
+// import CardComp from '../src/component/cardComp'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
-  const { cards, fetchCards } = useCards()
+  // const { cards, fetchCards } = useCards()
 
   return (
     <div className={styles.container}>
@@ -17,7 +15,10 @@ export default function Home() {
       </Head>
 
       <Container>
-        <Button onClick={fetchCards}>get cards</Button>
+        <Typography>
+          This Website just meant to be practice for React.js / Next.js / JoyUI
+        </Typography>
+        {/* <Button onClick={fetchCards}>get cards</Button>
         {cards && (
           <div
             style={{
@@ -29,7 +30,7 @@ export default function Home() {
               <CardComp key={card.id} card={card} />
             ))}
           </div>
-        )}
+        )} */}
       </Container>
     </div>
   )

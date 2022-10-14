@@ -1,42 +1,54 @@
-import { Card, CardCover, CardContent, Typography } from "@mui/joy"
+import { useTheme } from "@emotion/react"
+import {Box, Card, CardCover, CardContent, Typography } from "@mui/joy"
 import Image from "next/image"
 
 const CardComp = ({card})=>{
+  const theme = useTheme()
     return (<Card
         // key={card.id}
-        style={{
-          margin: 8,
-          padding: 4,
-          width: 108,
-          height: 185,
+        sx={{
+          margin: 1,
+          padding: 0.5,
+          width: {xs: 75, sm: 106},
+          height: {xs: 100, sm: 130},
           border: '1px solid grey',
           borderRadius: 8,
           textAlign: 'center',
+          '&:hover .card-overlay': {
+            display: 'unset'
+          },
+          '& .card-overlay': {
+            display: 'none'
+          },
         }}
       >
         <CardCover>
           <Image
-            width={100}
-            height={130}
+            // width={100}
+            // height={130}
             // style={{ objectFit: "cover" }}
             objectFit={'cover'}
-            layout={'fixed'}
+            layout={'fill'}
             src={card.iconUrls.medium}
             priority={true}
             alt={card.name + '\n not available'}
           />
         </CardCover>
-        <br />
-        <CardContent
+        <Box className='card-overlay'
           sx={{
-            bottom: 4,
+            top:0,
+            left:0,
+            background: 'rgba(0,0,0,0.3)',
+            width: '100%',
+            height: '100%',
+            position: 'absolute',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'flex-end',
           }}
         >
-          <Typography textAlign={'center'}>{card.name}</Typography>
-        </CardContent>
+          <Typography sx={{userSelect: 'none', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', color: 'white'}} textAlign={'center'}>{card.name}</Typography>
+        </Box>
       </Card>)
 }
 

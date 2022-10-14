@@ -24,6 +24,7 @@ const Players = () => {
 
   const [player, setPlayer] = useState()
   const fetchPlayer = useCallback(() => {
+    setFetch(true)
     axios('/api/player/' + encodeURIComponent(playerId))
       .then(
         (result) => {
@@ -33,13 +34,6 @@ const Players = () => {
       )
       .finally(() => setFetch(false))
   }, [playerId])
-
-  useEffect(() => {
-    if (fetch) {
-      fetchPlayer()
-    }
-    return () => {}
-  }, [fetch, fetchPlayer])
 
   return (
     <div>
@@ -54,7 +48,7 @@ const Players = () => {
         }}
         onChange={(e) => setPlayerId(e.target.value)}
         endDecorator={
-          <Button disabled={fetch} onClick={() => setFetch(true)}>
+          <Button disabled={fetch} onClick={fetchPlayer}>
             Search
           </Button>
         }

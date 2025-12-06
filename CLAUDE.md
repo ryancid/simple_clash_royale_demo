@@ -43,12 +43,14 @@ The application requires a Clash Royale API key to function:
 ### API Proxy Pattern
 
 The application uses a server-side proxy to handle Clash Royale API requests, solving two key challenges:
-- **IP binding**: Clash Royale API requires fixed IP (handled via royaleapi.dev proxy)
+- **IP binding**: Clash Royale API requires fixed IP (handled via royaleapi.dev proxy at `45.79.218.79`)
 - **API key security**: Keys are never exposed to the client side
 
 **Flow**: Client → Next.js API Route → Proxy (proxy.royaleapi.dev) → Clash Royale API
 
 The proxy configuration is centralized in `src/server/server.config.ts`, which creates an axios instance with the proxy base URL and authorization header.
+
+**Why use a proxy?** Vercel's serverless functions use dynamic IP addresses, but Clash Royale API requires IP whitelisting. The RoyaleAPI proxy provides a stable IP address that can be whitelisted. See `API_ARCHITECTURE_ANALYSIS.md` for alternative solutions and architectural recommendations.
 
 ### API Routes
 

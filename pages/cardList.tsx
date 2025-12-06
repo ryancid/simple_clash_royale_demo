@@ -1,15 +1,23 @@
+import { GetStaticProps } from 'next'
 import { serverInstance } from 'src/server/server.config'
 import CardComp from 'src/component/cardComp'
-import { Box, Button, Container, useTheme } from '@mui/joy'
+import { Box, Button, Container } from '@mui/joy'
 import { useCallback, useState } from 'react'
+import { Card, CardsResponseSchema } from 'src/types/card.schema'
 
-const CardList = ({ cards }) => {
+interface CardListProps {
+  cards: Card[]
+  error?: string
+}
+
+const CardList = ({ cards }: CardListProps) => {
   const size = 24
   const [page, setPage] = useState(0)
 
   const canNextPage = useCallback(() => {
     return (page + 1) * size < cards.length
-  }, [page, size, cards.length])
+  }, [page, cards.length])
+
   const canPrevPage = useCallback(() => {
     return page - 1 >= 0
   }, [page])
@@ -51,14 +59,18 @@ const CardList = ({ cards }) => {
   )
 }
 
-export async function getStaticProps() {
-  let props = {}
+export const getStaticProps: GetStaticProps<CardListProps> = async () => {
+  const props: CardListProps = { cards: [] }
+
   try {
     const axiosResult = await serverInstance.get('/cards')
-    props.cards = axiosResult.data.items
+
+    // Validate the response with Zod schema
+    const validatedData = CardsResponseSchema.parse(axiosResult.data)
+    props.cards = validatedData.items
   } catch (err) {
-    console.error(err)
-    props.error = err.message || 'Failed to fetch cards'
+    console.error('Error fetching cards:', err)
+    props.error = err instanceof Error ? err.message : 'Failed to fetch cards'
     props.cards = []
   }
 

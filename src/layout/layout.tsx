@@ -1,21 +1,27 @@
 import { Container, useTheme } from '@mui/joy'
 import { Box } from '@mui/system'
 import Link from 'next/link'
+import { ReactNode } from 'react'
 
-const Layout = ({ children }) => {
+interface LayoutProps {
+  children: ReactNode
+}
+
+const Layout = ({ children }: LayoutProps) => {
   const theme = useTheme()
   return (
     <Box sx={{ background: theme.palette.neutral[100] }}>
       <Box
-        border={`1px solid ${theme.palette.neutral.solidBorder}`}
         sx={{
           marginBottom: 1,
           paddingX: 0.5,
-          background: theme.palette.neutral.solidBg,
+          background: theme.palette.neutral[700],
           color: theme.palette.common.white,
           height: 40,
           display: 'flex',
-          alignItems: 'center'
+          alignItems: 'center',
+          border: '1px solid',
+          borderColor: theme.palette.neutral[600],
         }}
       >
         <Container

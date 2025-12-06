@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-A Next.js demo application that interfaces with the Clash Royale API to display player information and card data. Built with React, Next.js 12, TypeScript, and MUI Joy UI (alpha).
+A Next.js demo application that interfaces with the Clash Royale API to display player information and card data. Built with React 19, Next.js 16, TypeScript, and MUI Joy UI (alpha).
 
 **Demo**: https://simple-clash-royale-demo.vercel.app/
 
@@ -81,10 +81,14 @@ The codebase uses two patterns for data fetching:
 
 ### Tech Stack Notes
 
+- **Next.js 16**: Upgraded from v12. Uses React 19 and ESLint 9
+- **React 19**: Latest version with improved performance and features
 - **MUI Joy UI**: Using alpha version (`@mui/joy@5.0.0-alpha.43`)
+  - Note: `TextField` component has been removed in favor of `Input` composition
 - **TypeScript**: Configured with `strict: false` and `baseUrl: "./"` for absolute imports
 - **Image Handling**: Uses Next.js Image component with `priority={true}` for above-fold cards
 - **Styling**: Emotion for CSS-in-JS with MUI's `sx` prop
+- **Axios**: v1.13.2 (upgraded from 0.27.2 to fix security vulnerabilities)
 
 ## Known Issues
 
@@ -94,3 +98,16 @@ The codebase uses two patterns for data fetching:
 ## Testing
 
 Jest is installed (`"jest": "^29.1.2"`) but no test files or configuration currently exist in the repository.
+
+## Migration Notes
+
+### Next.js 16 & React 19 Upgrade
+
+The project has been upgraded from Next.js 12 to Next.js 16 and React 18 to React 19. Key changes:
+
+- **Breaking**: `getStaticProps` must return JSON-serializable data only (Error objects must be converted to strings)
+- **Breaking**: MUI Joy `TextField` component removed - use `Input` instead
+- **Security**: Axios upgraded from 0.27.2 to 1.13.2 to fix CSRF, DoS, and SSRF vulnerabilities
+- ESLint upgraded from 8.22.0 to 9.39.1 for compatibility with Next.js 16
+
+All vulnerabilities have been resolved (`npm audit` shows 0 vulnerabilities).

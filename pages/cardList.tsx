@@ -68,7 +68,7 @@ const CardList = ({ cards, error }: CardListProps) => {
   const containerRef = useRef<HTMLDivElement>(null)
 
   // Ref：debounce timer
-  const debounceTimerRef = useRef<NodeJS.Timeout>()
+  const debounceTimerRef = useRef<number>(0)
 
   // ResizeObserver：監聽容器寬度變化並動態計算每排卡片數量
   // Phase 6: 使用 debounce 避免快速調整視窗導致效能問題
@@ -85,7 +85,7 @@ const CardList = ({ cards, error }: CardListProps) => {
         clearTimeout(debounceTimerRef.current)
       }
 
-      debounceTimerRef.current = setTimeout(() => {
+      debounceTimerRef.current = window.setTimeout(() => {
         // 判斷當前是否為手機尺寸（使用 MUI 的斷點邏輯）
         const isMobile = window.innerWidth < 600 // MUI 的 sm 斷點
         const cardWidth = isMobile

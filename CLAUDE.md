@@ -113,3 +113,10 @@ The project has been upgraded from Next.js 12 to Next.js 16 and React 18 to Reac
 - ESLint upgraded from 8.22.0 to 9.39.1 for compatibility with Next.js 16
 
 All vulnerabilities have been resolved (`npm audit` shows 0 vulnerabilities).
+
+## Active Technologies
+- TypeScript 5.9.3, Next.js 16.0.7, React 19.2.1 (001-card-responsive-pagination)
+- N/A（此功能不涉及資料儲存，使用 Next.js getStaticProps 在 build time 取得卡片資料） (001-card-responsive-pagination)
+
+## Recent Changes
+- 001-card-responsive-pagination: Added TypeScript 5.9.3, Next.js 16.0.7, React 19.2.1

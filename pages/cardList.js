@@ -58,7 +58,8 @@ export async function getStaticProps() {
     props.cards = axiosResult.data.items
   } catch (err) {
     console.error(err)
-    props.error = err
+    props.error = err.message || 'Failed to fetch cards'
+    props.cards = []
   }
 
   return {

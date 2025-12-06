@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Button, TextField, Typography } from '@mui/joy'
+import { Button, Input, Typography } from '@mui/joy'
 import { useCallback, useEffect, useState } from 'react'
 import DeckComp from 'src/component/deckComp'
 
@@ -37,7 +37,7 @@ const Players = () => {
 
   return (
     <div>
-      <TextField
+      <Input
         placeholder="type game tag like #R09228V"
         onFocus={(e) => {
           if (!playerId) {
